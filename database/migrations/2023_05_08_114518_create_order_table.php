@@ -12,12 +12,17 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('payments', function (Blueprint $table) {
+        Schema::create('orders', function (Blueprint $table) {
             $table->id();
+            $table->unsignedBigInteger('advertisement_id')->unique();
+            $table->string('email');
+            $table->string('phone');
+            $table->text('address');
             $table->date('date')->default(DB::raw('NOW()'));
+            $table->boolean('status')->default(true);
             $table->string('transaction_id')->unique();
-            $table->string('reciverd');
-            $table->boolean('status')->default(false);
+            $table->foreign('transaction_id')->references('transaction_id')->on('payments');
+            // $table->foreign('advertisement_id')->references('id')->on('advertisements');
         });
     }
 
@@ -26,6 +31,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('payments');
+        Schema::dropIfExists('order');
     }
 };

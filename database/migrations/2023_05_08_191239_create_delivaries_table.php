@@ -3,7 +3,6 @@
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
-use Illuminate\Support\Facades\DB;
 
 return new class extends Migration
 {
@@ -12,12 +11,12 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('payments', function (Blueprint $table) {
+        Schema::create('delivaries', function (Blueprint $table) {
             $table->id();
-            $table->date('date')->default(DB::raw('NOW()'));
-            $table->string('transaction_id')->unique();
-            $table->string('reciverd');
-            $table->boolean('status')->default(false);
+            $table->date('pickup_date')->nullable();
+            $table->enum('status',['Waiting','PickedUp','Sent','Completed']);
+            $table->unsignedBigInteger('order_id');
+            $table->foreign('order_id')->references('id')->on('orders');
         });
     }
 
@@ -26,6 +25,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('payments');
+        Schema::dropIfExists('delivaries');
     }
 };
