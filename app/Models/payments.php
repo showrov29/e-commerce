@@ -11,5 +11,6 @@ class Payments extends Model
     public function order(){
         return $this->belongsTo(Orders::class,'transaction_id');
     }
+    public $timestamps = false;
     use HasFactory;
 }

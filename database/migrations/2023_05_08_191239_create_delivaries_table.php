@@ -14,7 +14,7 @@ return new class extends Migration
         Schema::create('delivaries', function (Blueprint $table) {
             $table->id();
             $table->date('pickup_date')->nullable();
-            $table->enum('status',['Waiting','PickedUp','Sent','Completed']);
+            $table->enum('status',['Waiting','PickedUp','Sent','Completed'])->default('Waiting');
             $table->unsignedBigInteger('order_id');
             $table->foreign('order_id')->references('id')->on('orders');
         });
